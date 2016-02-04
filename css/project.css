@@ -1,0 +1,437 @@
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+  display: block;
+}
+body {
+  line-height: 1;
+}
+ol, ul {
+  list-style: none;
+}
+blockquote, q {
+  quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+  content: '';
+  content: none;
+}
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/* Project */
+
+* {
+  box-sizing:border-box;
+}
+
+html, body {
+  height: 100%;
+  width: 100%;
+  background: #FFFFFF;
+  color: #424242;
+}
+
+body {
+   font-family: Roboto, "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; 
+   font-weight: 400;
+}
+
+a {
+-webkit-transition: all 0.3s ease-in-out;
+    -moz-transition: all 0.3s ease-in-out;
+    -o-transition: all 0.3s ease-in-out;
+    -ms-transition: all 0.3s ease-in-out;    
+    transition: all 0.3s ease-in-out;
+}
+
+/* backgrounds */
+
+#map-canvas {
+  height: 100%;
+  width: 100%;
+}
+
+
+.background_container {
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  margin:0;
+  padding:0;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+   -webkit-filter: grayscale(0.99);
+    -ms-filter: grayscale(0.99);
+      filter: grayscale(0.99);
+  z-index: 30;
+}
+
+.background_container_black {
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  margin:0;
+  padding:0;
+  background: #424242; 
+  background: rgba(0,0,0,0.8); 
+    -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  transition:.3s ease-in-out;
+  z-index: 20;
+}
+
+.background_container_map {
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  margin:0;
+  padding:0;
+  background: url(../img/google-map.jpg) no-repeat center fixed ; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+   -webkit-filter: grayscale(0.99);
+    -ms-filter: grayscale(0.99);
+      filter: grayscale(0.99);
+      transition:.3s ease-in-out;
+      z-index: 0;
+}
+
+#pano {
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  visibility: hidden;
+  top:0;
+  z-index: 10;
+}
+
+/* car */
+
+.quote_container {
+  position: fixed;
+  left: 50%;
+  top:0;
+  z-index: 0
+}
+
+.quote {
+  font-size:90px;
+  color:#dedede;
+  position: relative;
+  left: -50%;
+  visibility: hidden;
+}
+
+/* hyperlapse */
+
+.canvas_hyperlapse {
+  margin-top:50px;
+  width:100%;
+  height:auto;
+}
+
+.route_container {
+  position: fixed;
+  left: 0;
+  top:0;
+  z-index: 100;
+  width:100%;
+}
+
+.route {
+  padding:0 30px;
+  font-size:90px;
+  color:#dedede;
+  position: relative;
+  margin:0 auto;
+  width:100%;
+  max-width:1084px;
+}
+
+#route {
+  display:none;
+}
+
+/* invit */
+
+.maps_container {
+  position: fixed;
+  padding:30px;
+  left:0;
+  right:0;
+  visibility: visible;
+  z-index: 999;
+}
+
+.maps_panel {
+  position: relative;
+  margin: 0 auto;
+  max-width: 1024px;
+  width:100%;
+  background-color:transparent !important;
+  border-top-style: none;
+  border-left-style: none;
+  border-right-style: none;
+  border-bottom-style: none;
+}
+
+.input_bar {
+  float: left;
+  width: 100%;
+  background-color: white !important;
+  background-image: none !important;
+  bottom: 20px;
+}
+
+.content_group_bar{
+  position: relative;
+  float: left;
+  width: 100%;
+  margin-top: 5px;
+}
+
+.map_item{
+  margin-bottom: 5px;
+  padding:10px;
+  border-radius:2px;
+}
+
+.maps-text{
+    position: relative;
+    font-size: 17px;
+    line-height: 0.9;
+    margin-left: 10px;
+    margin-top:3px;
+    width: calc(100% - 50px);
+    float: left;
+}
+
+.maps-icon {
+    margin: 0 !important;
+    padding: 0;
+    max-width: 20px;
+    max-height: 20px;
+    float: left;
+}
+
+.map_cross{
+  max-width: 20px;
+  max-height: 20px;
+  float: right;
+
+}
+
+.maps-icon-directions {
+    margin: 0 !important;
+    padding: 0;
+    min-width: 30px;
+    min-height: 30px;
+}
+
+.maps-icon-google {
+    margin-bottom: 15px;
+}
+
+.maps-text-proxy {
+    position: relative;
+    font-size: 15px;
+    font-weight: 400;
+    color: #3A84DF;
+    padding: 0;
+    list-style-type: none;
+}
+
+.maps-text-proxy li {
+  display:inline-block;
+  padding: 0 10px 0 0;
+  vertical-align: middle;
+}
+
+
+.maps-text-form {
+    font-size: 16px;
+    line-height: 30px;
+    font-weight: 300;
+    color: #3A84DF;
+}
+
+.maps-icon-form {
+    margin: 0 !important;
+    padding: 0;
+    min-width: 25px;
+    min-height: 25px;
+}
+
+.maps-text-directions {
+  font-size: 20px;
+}
+
+
+.maps-text-content-title {
+    color: #333; 
+    font-weight: 700;
+    font-size: 25px;
+}
+
+.maps-text-content-body {
+    color: #333;  
+    text-align: center;
+    line-height: 1.7;
+    margin-top: 30px;
+}
+
+/* pano */
+
+#pano .close {
+    z-index: 10000000000;
+    opacity: 1;
+    position: fixed;
+    top: 30px;
+    right: 30px;
+    border-radius: 100px;
+    background: #FFFFFF;
+    background: rgba(255,255,255,0.3);
+    padding: 10px;
+}
+
+#pano .close:hover {
+    z-index: 10000000000;
+    opacity: 1;
+    position: fixed;
+    top: 30px;
+    right: 30px;
+    border-radius: 50px;
+    background: #FFFFFF;
+    background: rgba(255,255,255,1);
+    padding: 10px;
+}
+
+/* helpers responsive */
+
+.vertical-center {
+  min-height: 100%;  /* Fallback for vh unit */
+  min-height: 100vh; /* You might also want to use
+                        'height' property instead.
+                        
+                        Note that for percentage values of
+                        'height' or 'min-height' properties,
+                        the 'height' of the parent element
+                        should be specified explicitly.
+  
+                        In this case the parent of '.vertical-center'
+                        is the <body> element */
+
+  /* Make it a flex container */
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex; 
+  
+  /* Align the bootstrap's container vertically */
+    -webkit-box-align : center;
+  -webkit-align-items : center;
+       -moz-box-align : center;
+       -ms-flex-align : center;
+          align-items : center;
+  
+  /* In legacy web browsers such as Firefox 9
+     we need to specify the width of the flex container */
+  width: 100%;
+  
+  /* Also 'margin: 0 auto' doesn't have any effect on flex items in such web browsers
+     hence the bootstrap's container won't be aligned to the center anymore.
+  
+     Therefore, we should use the following declarations to get it centered again */
+         -webkit-box-pack : center;
+            -moz-box-pack : center;
+            -ms-flex-pack : center;
+  -webkit-justify-content : center;
+          justify-content : center;
+}
+
+img.responsive {
+  max-width: 100%;
+  width:100%;
+}
+
+.content-center {
+    text-align: center;
+}
+
+.row_content {
+    padding:5%;
+}
+
+.directions-center {
+  text-align: center;
+}
+
+.no-link {
+   pointer-events: none;
+   cursor: default;
+}
+
+.img_sv {
+    cursor: pointer;
+}
+
+.img_sv:hover {
+    color: white;
+}
+
+@media (max-device-width:992px) {
+  nav .maps-text-proxy {
+    font-size: 12px;
+  }
+  .maps-text-proxy li {
+    padding: 0 3px 0 0;
+  }
+  .maps-text-content-title {
+    font-size:20px;
+  }
+  .maps-text-content-body {
+    margin-top:15px;
+  }
+  .maps-icon-google {
+    max-width: 90px;
+    margin-top: 15px;
+  }
+}

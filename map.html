@@ -1,0 +1,180 @@
+
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <title>Google Map</title>
+        <style>
+            html, body {
+                height: 100%;
+                margin: 0;
+                padding: 0;
+            }
+            #map {
+                height: 100%;
+            }
+        </style>
+        <link rel="stylesheet" href="css/style.css">
+    </head>
+
+    <body>
+        <div id="map"></div>
+        
+        <script>
+            var map;
+            var init = true;
+            var markerClusterer;
+            
+            function initMap() {
+                var myLatLng = {lat: 48.8637635, lng: 2.3438276};
+
+                map = new google.maps.Map(document.getElementById('map'), {
+                    zoom: 5,
+                    center: myLatLng,
+                    styles: [
+                        {
+                            "featureType": "road.highway",
+                            "stylers": [
+                                { "visibility": "off" }
+                            ]
+                        },{
+                            featureType: "water",
+                            elementType: "geometry",
+                            stylers: [
+                                { color: "#4285f4" }
+                            ]
+                        },{
+                            featureType: "water",
+                            elementType: "labels.text.fill",
+                            stylers: [
+                                { color: "#fbbc05" }
+                            ]
+                        },{
+                            featureType: "water",
+                            elementType: "labels.text.stroke",
+                            stylers: [
+                                { color: "#ea4335" },
+                                { weight: 0.6 }
+                            ]
+                        },{
+                            featureType: "road",
+                            stylers: [
+                                { color: "#fbbc05" }
+                            ]
+                        },{
+                            featureType: "landscape",
+                            stylers: [
+                                { color: "#34a853" }
+                            ]
+                        },{
+                            featureType: "poi",
+                            elementType: "geometry",
+                            stylers: [
+                                { color: "#34a853" },
+                                { "lightness": 10 }
+                                /*{ color: "#ea4335" },
+                                { "lightness": 10 }*/
+                            ]
+                        },{
+                            featureType: "administrative",
+                            elementType: "labels.text.fill",
+                            stylers: [
+                                { color: "#fbbc05" }
+                            ]
+                        },{
+                            featureType: "administrative.country",
+                            elementType: "geometry.stroke",
+                            stylers: [
+                                { color: "#ea4335" }
+                            ]
+                        },{
+                            featureType: "administrative",
+                            elementType: "labels.text.stroke",
+                            stylers: [
+                                { color: "#ea4335" },
+                                { weight: 0.6 }
+                            ]
+                        },{
+                            featureType: "road.arterial",
+                            stylers: [
+                                { visibility: "off" }
+                            ]
+                        },
+                        {
+                            "featureType": "transit.line",
+                            "stylers": [
+                                { "color": "#ea4335" },
+                                { weight: 0.4 }
+                            ]
+                        }
+                    ]
+                });
+                
+                markerClusterer = new MarkerClusterer(map, [], {
+                    maxZoom: 10
+                });
+
+                getAllData();
+
+                setTimeout(function() {
+                    init = false;
+                }, 5000);
+            }
+            
+            var panPath = [];   // An array of points the current panning action will use
+            var panQueue = [];  // An array of subsequent panTo actions to take
+            var STEPS = 10;     // The number of steps that each panTo action will undergo
+
+            function panTo(newLat, newLng) {
+              if (panPath.length > 0) {
+                // We are already panning...queue this up for next move
+                panQueue.push([newLat, newLng]);
+              } else {
+                // Lets compute the points we'll use
+                panPath.push("LAZY SYNCRONIZED LOCK");  // make length non-zero - 'release' this before calling setTimeout
+                var curLat = map.getCenter().lat();
+                var curLng = map.getCenter().lng();
+                var dLat = (newLat - curLat)/STEPS;
+                var dLng = (newLng - curLng)/STEPS;
+
+                for (var i=0; i < STEPS; i++) {
+                  panPath.push([curLat + dLat * i, curLng + dLng * i]);
+                }
+                panPath.push([newLat, newLng]);
+                panPath.shift();      // LAZY SYNCRONIZED LOCK
+                setTimeout(doPan, 20);
+              }
+            }
+
+            function doPan() {
+              var next = panPath.shift();
+              if (next != null) {
+                // Continue our current pan action
+                map.panTo( new google.maps.LatLng(next[0], next[1]));
+                setTimeout(doPan, 20);
+              } else {
+                // We are finished with this pan - check if there are any queue'd up locations to pan to 
+                var queued = panQueue.shift();
+                if (queued != null) {
+                  panTo(queued[0], queued[1]);
+                }
+              }
+            }
+        </script>
+        
+        <script type="text/javascript" src="https://google-maps-utility-library-v3.googlecode.com/svn-history/r360/trunk/markerclustererplus/src/markerclusterer.js"></script>
+        
+        <!-- Firebase -->
+        <script src="https://cdn.firebase.com/js/client/2.2.5/firebase.js"></script>
+        <!-- jQuery library -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+        <!-- RSVP -->
+        <script src="src/vendor/rsvp.min.js"></script>
+        <!-- GeoFire -->
+        <script src="src/vendor/geofire.min.js"></script>
+
+        <!-- Custom JS -->
+        <script src="src/map_firebase.js" defer></script>
+        
+        <script async defer src="https://maps.googleapis.com/maps/api/js?signed_in=false&callback=initMap"></script>
+    </body>
+</html>

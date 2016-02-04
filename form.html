@@ -1,0 +1,160 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <title>Participer</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <style>
+            .form-wrapper {
+                position:absolute;
+                top:30%;
+                right:0;
+                left:0;
+            }
+            
+            html {
+/*
+                background-image: -webkit-linear-gradient(-45deg, #4ebdc0, #4ebdc0);
+                background-image: -moz-linear-gradient(-45deg, #4ebdc0, #4ebdc0);
+                background-image: -o-linear-gradient(-45deg, #4ebdc0, #4ebdc0);
+                background-image: linear-gradient(135deg, #4ebdc0, #4ebdc0);
+*/
+/*
+                background-image: url('/img/google_background_small.png');
+                background-repeat: no-repeat;
+                background-attachment: fixed;
+                background-position: center;
+*/
+                background: url('/img/bg/toronto-city-hall-1030718_1280.jpg') no-repeat center center fixed; 
+                -webkit-background-size: cover;
+                -moz-background-size: cover;
+                -o-background-size: cover;
+                background-size: cover;
+                height: 100%;
+                width: 100%;
+                position: fixed;
+            }
+            body {
+                background-color:transparent !important;
+                font-family: "Helvetica Neue",Arial;
+                font-weight: 100;
+                letter-spacing: 1px;
+                line-height: 1;
+                height: 100%;
+                width: 100%;
+                position: absolute;
+            }
+            
+            #send_btn {
+                background-color: rgba(255, 255, 255, 0.2);
+                border: solid 1px white;
+                border-radius: 1px;
+                color: white;
+            }
+            
+            .form_field {
+                color: white!important;
+                background-color: rgba(0, 0, 0, 0.3)!important;
+                border: 1px solid white!important;
+                letter-spacing: 1.5px;
+            }
+            
+            input:-ms-input-placeholder {
+                color: white!important;
+            }
+            input:-moz-placeholder {
+                color: white!important;
+            }
+            input::-moz-placeholder {
+                color: white!important;
+            }
+            input::-webkit-input-placeholder {
+                color: white!important;
+            }
+            input::placeholder {
+                color: white!important;
+            }
+        </style>
+
+        <!-- Firebase -->
+        <script src="https://cdn.firebase.com/js/client/2.2.5/firebase.js"></script>
+        <!-- RSVP -->
+        <script src="src/vendor/rsvp.min.js"></script>    
+        <!-- GeoFire -->
+        <script src="src/vendor/geofire.min.js"></script>
+
+        <!-- Custom JS -->
+        <script src="src/form_firebase.js" defer></script>
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+        <!-- jQuery library -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+        <!-- Latest compiled JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    </head>
+
+    <body>
+        <center><h2 style="color:white;" >Firebase meets Google Maps</h2></center>
+        <form class="" action="javascript:completeAndRedirect();" >
+            <div class="col-sm-12 form-group" style="padding-top:10%">    
+                <label for="email" class="col-sm-12 control-label" style="color:white;text-align: center;">Message</label>
+                <div class="col-sm-12">
+                    <input type="text" class="form-control form_field" id="title" placeholder="Message" value="" >
+                </div>
+            </div>
+            <br>
+            <div class="col-sm-12 form-group">    
+                <label for="email" class="col-sm-12 control-label" style="color:white;text-align: center;">Lieu</label>    
+                <div class="col-sm-12">
+                    <input type="text" class="form_field form-control" id="location" placeholder="Lieu" value="">
+                </div>
+            </div>
+
+            <center><button id="send_btn" type="submit" class="btn btn-default">Envoyer</button></center>
+        </form>
+
+        <script>
+            var place_location = [];
+            var place_name = "";
+            var place_photo = "https://62e528761d0685343e1c-f3d1b99a743ffa4142d9d7f1978d9686.ssl.cf2.rackcdn.com/files/93616/area14mp/image-20150902-6700-t2axrz.jpg";
+            var formatted_address = "";
+            var formatted_phone_number = "";
+            var website = "";
+            
+            function init() {
+                var input = document.getElementById('location');
+                var autocomplete = new google.maps.places.Autocomplete(input);
+                autocomplete.addListener('place_changed', function() {
+                    var place = autocomplete.getPlace();
+
+                    console.log(place);
+
+                    if (place.name != null) {
+                        place_name = place.name;
+                    }
+                    if (place.formatted_address != null) {
+                        formatted_address = place.formatted_address;
+                    }
+                    if (place.formatted_phone_number != null) {
+                        formatted_phone_number = place.formatted_phone_number;
+                    }
+                    if (place.formatted_phone_number != null) {
+                        formatted_phone_number = place.formatted_phone_number;
+                    }
+                    if (place.website != null) {
+                        website = place.website;
+                    }
+                    if (place.photos != null) {
+                        place_photo = place.photos[0].getUrl({ 'maxWidth': 200, 'maxHeight': 200 });
+                    }
+
+                    place_location= [place.geometry.location.lat(), place.geometry.location.lng()];
+
+                    console.log(place_location);
+                });
+            }
+        </script>
+        
+        <script src="https://maps.googleapis.com/maps/api/js?signed_in=true&libraries=places&callback=init" async defer></script>
+    </body>
+</html>
