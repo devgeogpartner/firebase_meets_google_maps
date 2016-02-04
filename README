@@ -1,0 +1,5 @@
+This app contains 2 clientside applications:
+- map.html combined with src/map_firebase.js
+  => this app shows all the data pushed into the firebase database on a map
+- form.html combined with src/form_firebase.js
+  => this app allows the users to enter data that will be pushed into the firebase database
